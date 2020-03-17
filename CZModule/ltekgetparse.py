@@ -61,10 +61,8 @@ def parse(file, dict1):
 
     f.close()
     return Kget_list
-
-#AA=parse("C:\\CZEZFL9504254.log",dict2)
-
-#print(AA)
+AA=parse("C:\\CZEZFL9504254.log",dict2)
+print(AA)
 
 
 

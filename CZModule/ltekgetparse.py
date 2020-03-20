@@ -43,6 +43,27 @@ def parse(file, dict1):
                                 else:
                                     Cache[MO][StructDetail] = ""
                             line = f.readline()
+                    elif line.startswith("reservedBy["):
+                        if "reservedBy" in Cache[MO].keys():
+                            reservedBy_len=int(re.split('\[|\]',line.strip())[1])
+                            if reservedBy_len>=1:
+                               line=f.readline()
+                               reservedBy_value=""
+                               while line.find(">>>") >=0:
+                                     reservedBy_value="%s \n %s"%(reservedBy_value,line)
+                                     line=f.readline()
+
+                               Cache[MO]["reservedBy"]=reservedBy_value
+                    elif line.startswith("sectorCarrierRef["):
+                        if "sectorCarrierRef" in Cache[MO].keys():
+                            sectorCarrierRef_len=int(re.split('\[|\]',line.strip())[1])
+                            if sectorCarrierRef_len>=1:
+                                line=f.readline()
+                                sectorCarrierRef_value=""
+                                while line.find(">>>") >=0:
+                                    sectorCarrierRef_value ="%s \n %s"%(sectorCarrierRef_value,line)
+                                    line=f.readline()
+                                Cache[MO]["sectorCarrierRef"] =sectorCarrierRef_value
 
 
                     else:
@@ -61,8 +82,10 @@ def parse(file, dict1):
 
     f.close()
     return Kget_list
-AA=parse("C:\\CZEZFL9504254.log",dict2)
-print(AA)
+
+#AA=parse("C:\\CZEZFL9504254.log",dict2)
+
+#print(AA)
 
 
 

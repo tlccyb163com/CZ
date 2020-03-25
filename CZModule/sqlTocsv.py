@@ -17,7 +17,9 @@ class sqlquery:
               CCon=pyodbc.connect(self.conn)
               Data=pd.read_sql(self.sql,CCon)
               Data.to_csv(self.outputcsv_file,index=False)
-              CCon.close()
 
           except Exception as e:
                print (e)
+
+          finally:
+               CCon.close

@@ -31,8 +31,8 @@ def alarm_pase(alarm_inputdir,alarm_ouputfile=None):
                                  line = alarmf.readline()
                                  while not line.strip().startswith(">>> Total"):
                                            temp=re.findall(r'(\w{1,}=\w{1,})',line.strip())
-                                           line=line.replace(temp[0],"    %s"%temp[0]).strip()
-                                           temp=re.findall(r'\(\w+',line.strip())
+                                           line=line.replace(temp[0],"      %s"%temp[0]).strip()
+                                           temp=re.findall(r'\([\w\(]+',line.strip())
                                            line=line.replace(temp[0],"    %s"%temp[0]).strip()
                                            alarm_list=re.split('\s{1}[mMWwCc]\s{1}|\s{3,}|\s{3,}\(',line.strip())
                                            alarm_list.insert(0,ERBS)

@@ -203,6 +203,129 @@ def crMeasBasedCsfbTargetSelection(EutranCellFDD,thresholdRscp,GeranFreqGroupRel
             "\n"%(EutranCellFDD,thresholdRscp,EutranCellFDD,GeranFreqGroupRelation,altCsfbTargetPrio)
 
     return content
+    
+    
+    
+def changeFrequency(ERBS,action,ExternalUtranCellFDD,parameter,UtranFrequency):
+    content="acc %s %s\n"\
+            "%s\n\n"%(ExternalUtranCellFDD,parameter,UtranFrequency)
+    
+    return content
+    
+    
+    
+def crutranrelation(SourceRNC,SourceCell,TargetRNC,TargetCell,hcsPrio,qHcs,penaltyTime,temporaryOffset1,temporaryOffset2,loadSharingCandidate,qOffset1sn,qOffset2sn,selectionPriority):
+    if SourceRNC==TargetRNC:
+       content='CREATE\n' \
+               '(\n' \
+               '   parent "ManagedElement=1,RncFunction=1,UtranCell=%s"\n' \
+               '   identity "%s_%s"\n' \
+               '   moType UtranRelation\n' \
+               '   exception none\n' \
+               '   nrOfAttributes 6\n' \
+               '   utranCellRef Ref "ManagedElement=1,RncFunction=1,UtranCell=%s"\n' \
+               '   hcsSib11Config Struct\n' \
+               '   nrOfElements 5\n' \
+               '    hcsPrio Integer %s\n' \
+               '    qHcs Integer %s\n' \
+               '    penaltyTime Integer %s\n' \
+               '    temporaryOffset1 Integer %s\n' \
+               '    temporaryOffset2 Integer %s\n' \
+               '   selectionPriority Integer %s\n' \
+               '   loadSharingCandidate Integer %s\n' \
+               '   qOffset1sn Integer %s\n' \
+               '   qOffset2sn Integer %s\n' \
+               ')\n\n'%(SourceCell,SourceCell,TargetCell,TargetCell,hcsPrio,qHcs,penaltyTime,temporaryOffset1,temporaryOffset2,selectionPriority,loadSharingCandidate,qOffset1sn,qOffset2sn)
+               
+    else:
+       content='CREATE\n' \
+               '(\n' \
+               '   parent "ManagedElement=1,RncFunction=1,UtranCell=%s"\n' \
+               '   identity "%s_%s"\n' \
+               '   moType UtranRelation\n' \
+               '   exception none\n' \
+               '   nrOfAttributes 6\n' \
+               '   utranCellRef Ref "ManagedElement=1,RncFunction=1,IurLink=IurLink_%s,ExternalUtranCell=%s"\n' \
+               '   hcsSib11Config Struct\n' \
+               '   nrOfElements 5\n' \
+               '    hcsPrio Integer %s\n' \
+               '    qHcs Integer %s\n' \
+               '    penaltyTime Integer %s\n' \
+               '    temporaryOffset1 Integer %s\n' \
+               '    temporaryOffset2 Integer %s\n' \
+               '   selectionPriority Integer %s\n' \
+               '   loadSharingCandidate Integer %s\n' \
+               '   qOffset1sn Integer %s\n' \
+               '   qOffset2sn Integer %s\n' \
+               ')\n\n'%(SourceCell,SourceCell,TargetCell,TargetRNC,TargetCell,hcsPrio,qHcs,penaltyTime,temporaryOffset1,temporaryOffset2,selectionPriority,loadSharingCandidate,qOffset1sn,qOffset2sn)
+    
+    return content
+    
+    
+def crgsmneighbor(SourceRNC,SourceCell,TargetGsmNetwork,TargetCell,mobilityRelationType,qOffset1sn,selectionPriority):
+    content='CREATE\n' \
+            '(\n' \
+            '   parent "ManagedElement=1,RncFunction=1,UtranCell=%s"\n' \
+            '   identity "%s_%s"\n' \
+            '   moType GsmRelation\n' \
+            '   exception none\n' \
+            '   nrOfAttributes 4\n' \
+            '   externalGsmCellRef Ref "ManagedElement=1,RncFunction=1,ExternalGsmNetwork=46001,ExternalGsmCell=%s"\n' \
+            '   mobilityRelationType Integer %s\n' \
+            '   qOffset1sn Integer %s\n' \
+            '   selectionPriority Integer %s\n' \
+            ')\n\n'%(SourceCell,SourceCell,TargetCell,TargetCell,mobilityRelationType,qOffset1sn,selectionPriority)
+    
+    return content
+
+def crexternalutrancell(**kwargs):
+    content='CREATE\n' \
+            '(\n' \
+            '   parent "ManagedElement=1,RncFunction=1,IurLink=IurLink_%s"\n' \
+            '   identity "%s"\n' \
+            '   moType ExternalUtranCell\n' \
+            '   exception none\n' \
+            '   nrOfAttributes 13\n' \
+            '   cId Integer %s\n' \
+            '   lac Integer %s\n' \
+            '   rac Integer %s\n' \
+            '   primaryScramblingCode Integer %s\n' \
+            '   uarfcnDl Integer %s\n' \
+            '   uarfcnUl Integer %s\n' \
+            '   agpsEnabled Integer %s\n' \
+            '   individualOffset Integer %s\n' \
+            '   cellCapability Struct\n' \
+            '   nrOfElements 4\n' \
+            '      hsdschSupport Integer %s\n' \
+            '      edchSupport Integer %s\n' \
+            '      edchTti2Support Integer %s\n' \
+            '      enhancedL2Support Integer %s\n' \
+            '   maxTxPowerUl Integer %s\n' \
+            '   qRxLevMin Integer %s\n' \
+            '   qQualMin Integer %s\n' \
+            '   userLabel String "%s"\n' \
+            ')\n\n'%(kwargs.get("IurLinkID"),kwargs.get("ExternalCell"),kwargs.get("CID"),kwargs.get("LAC"),kwargs.get("RAC"),kwargs.get("PSC"),kwargs.get("uarfcnDl"),kwargs.get("uarfcnUl"),kwargs.get("agpsEnabled"),kwargs.get("individualOffset"),kwargs.get("hsdschSupport"),kwargs.get("edchSupport"),kwargs.get("edchTti2Support"),kwargs.get("enhancedL2Support"),kwargs.get("maxTxPowerUl"),kwargs.get("qRxLevMin"),kwargs.get("qQualMin"),kwargs.get("ExternalCell"))
+    return content
 
 
 
+def crexternalgsmcell(**kwargs):
+    content='CREATE\n' \
+            '(\n' \
+            '   parent "ManagedElement=1,RncFunction=1,ExternalGsmNetwork=%s"\n' \
+            '   identity "%s"\n' \
+            '   moType ExternalGsmCell\n' \
+            '   exception none\n' \
+            '   nrOfAttributes 10\n' \
+            '   cellIdentity Integer %s\n' \
+            '   ncc Integer %s\n' \
+            '   bcc Integer %s\n' \
+            '   bcchFrequency Integer %s\n' \
+            '   lac Integer %s\n' \
+            '   bandIndicator Integer %s\n' \
+            '   maxTxPowerUl Integer %s\n' \
+            '   individualOffset Integer %s\n' \
+            '   qRxLevMin Integer %s\n' \
+            '   userLabel String "%s"\n' \
+            ')\n\n'%(kwargs.get("ExternalGsmNetwork"),kwargs.get("ExternalGsmCell"),kwargs.get("cellIdentity"),kwargs.get("ncc"),kwargs.get("bcc"),kwargs.get("bcchFrequency"),kwargs.get("lac"),kwargs.get("bandIndicator"),kwargs.get("maxTxPowerUl"),kwargs.get("individualOffset"),kwargs.get("qRxLevMin"),kwargs.get("ExternalGsmCell"))
+    return content

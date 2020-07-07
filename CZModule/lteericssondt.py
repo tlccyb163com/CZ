@@ -3,11 +3,12 @@
 import os
 
 #set del scw bl deb methods of parameters
-def paramater(action,mo,canshu,value):
-    if action.lower()=="set":
-        content="set %s %s %s \n"%(mo,canshu,value)
+def paramater(action,mo,canshu="",value=""):
+
+    if action.lower()=="bl" or action.lower()=="deb":
+       content="%s %s \n" % (action, mo)
     else:
-        content="%s %s \n" % (action, mo)
+        content="%s %s %s %s \n"%(action,mo,canshu,value)
 
     return  content
 

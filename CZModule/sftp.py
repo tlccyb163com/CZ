@@ -23,7 +23,9 @@ class sftp(object):
             sftp=paramiko.SFTPClient.from_transport(tran)
             for file in os.listdir(filesdir):
                 if os.path.isfile(os.path.abspath(os.path.join(filesdir,file))):
-                   sftp.put(os.path.abspath(os.path.join(filesdir,file)),os.path.abspath(os.path.join(UploadDir,file)))
+                   src="/".join(os.path.join(filesdir,file).split("\\"))
+                   dest="/".join(os.path.join(UploadDir,file).split("\\"))
+                   sftp.put(src,dest)
 
         except Exception as e:
                print(e)
@@ -41,7 +43,9 @@ class sftp(object):
                 tran.connect(username=self.user,password=self.passwd)
                 sftp=paramiko.SFTPClient.from_transport(tran)
                 for file in sftp.listdir(filesdir):
-                    sftp.get(os.path.join(filesdir,file),os.path.abspath(os.path.join(DownloadDir,file)))
+                    src="/".join(os.path.join(filesdir,file).split("\\"))
+                    dest="/".join(os.path.join(DownloadDir,file).split("\\"))
+                    sftp.get(src,dest)
 
         except Exception as e:
                print(e)

@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 
 class mail(object):
       
-      def __init__(**kwargs)
+      def __init__(self,**kwargs):
             '''
             mail of config setting
             '''
@@ -22,7 +22,7 @@ class mail(object):
             self.subject=kwargs.get("subject")
             self.puretext=kwargs.get("puretext")
             self.html=kwargs.get("html")
-            self.files=kwargs.get("files")  
+            self.files=kwargs.get("files")
             
             assert isinstance(self.mail_host,str) and isinstance(self.mail_user,str) and isinstance(self.passwd,str) and isinstance(self.subject,str)
             
@@ -36,7 +36,7 @@ class mail(object):
                assert isinstance(self.files,list)
                
             
-      def send(self)
+      def send(self):
            msg=MIMEMultipart()
            msg['From']=self.mail_user
            msg['To']=",".join(self.receiver)

@@ -31,7 +31,51 @@ class sftp(object):
                print(e)
         finally:
              tran.close()
-
+             
+    def singlefileupload(self,file="",UploadDir=""):
+        
+        try:
+            print ("start---")
+            tran=paramiko.Transport((self.ip,self.port))
+            tran.connect(username=self.user,password=self.passwd)
+            sftp=paramiko.SFTPClient.from_transport(tran)
+            filename="/".join(file.split("\\")).split("/")[-1]
+            src=file
+            dest="/".join(os.path.join(UploadDir,filename).split("\\"))
+            sftp.put(src,dest)
+            print("end----")
+            
+        except Exception as e:
+               print (e,"------------------")
+               
+        finally:
+              tran.close()
+            
+            
+            
+    def singlefiledownload(self,file,DownloadDir=""):
+        try:
+            if not os.path.exists(DownloadDir):
+                   print ("DownloadDir is not Exists")
+            else:
+                 tran=paramiko.Transport((self.ip,self.port))
+                 tran.connect(username=self.user,password=self.passwd)
+                 sftp=paramiko.SFTPClient.from_transport(tran)
+                 src=file
+                 dest="/".join(os.path.join(DownloadDir,file).split("\\"))
+                 sftp.get(src,dest)
+                 
+        except Exception as e:
+                
+                print(e)
+                
+        finally:
+                
+                tran.close()
+                 
+                 
+                
+        
 
 
     def FileDownload(self,filesdir="",DownloadDir=""):
